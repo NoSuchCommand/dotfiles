@@ -1,0 +1,113 @@
+# ~/.bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+#------------------------------------------------------------------------------#
+#-- Aliases
+#------------------------------------------------------------------------------#
+alias eog=xviewer
+alias evince=xreader
+alias gw='git what'
+
+
+#------------------------------------------------------------------------------#
+#-- Functions
+#------------------------------------------------------------------------------#
+
+# Include the python venv name in purple if it exists
+function venv_ps1() {
+    if [ -n "$VIRTUAL_ENV" ]; then
+        printf "[\e[35m%s\e[0m]" "$(basename $VIRTUAL_ENV)"
+    fi
+}
+
+# Print input number in bold red if not zero
+function bred_if_nz {
+    if [ "$1" -gt 0 ]; then
+        printf '\033[1;31m%3d\033[0m' "$1"
+    else
+        printf '%3d' "$1"
+    fi
+}
+
+# Spot all broken symlinks in the current directory
+function brokenlinks() {
+    for f in *; do
+        [ -e "$(readlink $f)" ] || echo $f
+    done
+}
+
+# Show URL for opening a github issue regarding multiple lines
+# Espacially useful for non-code files (like asciidoc)
+function ghissue() {
+    (( $# < 2 )) && {
+        printf 'Usage: ghissue FILE STARTLINE [ENDLINE]\n' >&2
+        return 1
+    }
+    git status &> /dev/null || {
+        printf 'Error: Not inside a git repository !\n' >&2
+        return 2
+    }
+    local file=$(realpath "$1")
+    local gitroot=$(git rev-parse --show-toplevel)
+    local gitfile=${file#${gitroot}/}
+    local startline="$2" endline="$3"
+    local repo=$(git remote -v |
+                 awk '/^origin.*\(fetch\)/ {
+                          sub("\\.git$", "", $2);
+                          sub("[^/]*@github.com", "github.com", $2);
+                          print $2;
+                      }'
+                )
+    local commit=$(git log -n 1 --format=%H -- "$file")
+
+    printf '%s/blob/%s/%s#L%s%s\n' "$repo"                  \
+                                   "$commit"                \
+                                   "$gitfile"               \
+                                   "$startline"             \
+                                   "${endline:+-L$endline}"
+    return 0
+}
+
+# Globally cleanup trailing spaces inside files of a git repo
+function eol_cleanup {
+    git status &> /dev/null || {
+        printf 'Error: Not inside a git repository !\n' >&2
+        return 1
+    }
+
+    local f
+
+    git ls-files | while read f; do
+        file -b --mime-type "$f" | grep ^text/ && sed -ri 's/\s+$//' "$f"
+    done
+}
+
+#------------------------------------------------------------------------------#
+#-- Sources
+#------------------------------------------------------------------------------#
+source /etc/profile.d/vte.sh # Workaround the CWD bug in GNOME Terminal
+source /usr/share/git-core/contrib/completion/git-prompt.sh
+
+#------------------------------------------------------------------------------#
+#-- Variables
+#------------------------------------------------------------------------------#
+export LANG=en_US.utf8
+export EDITOR=vim
+export LESS=FRXS
+export HISTCONTROL=ignoredups:ignorespace
+
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+
+PROMPT_COMMAND='__git_ps1 "[\$(bred_if_nz \$?)]\$(venv_ps1)" "[\u@\h \W]\\$ " "[%s]";'"$PROMPT_COMMAND"
+export PROMPT_COMMAND
+
+#------------------------------------------------------------------------------#
+#-- Options
+#------------------------------------------------------------------------------#
+shopt -s direxpand

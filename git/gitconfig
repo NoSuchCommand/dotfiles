@@ -1,0 +1,21 @@
+# ~/.gitconfig
+[color]
+	ui = true
+[alias]
+	lol  = log --oneline --all --graph --decorate
+	glog = log --oneline --all --graph --no-decorate
+	slog = log --oneline --all --decorate
+	ol   = log --oneline --no-decorate
+	what = !gitwhat
+	co   = checkout
+[push]
+	default = matching
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
