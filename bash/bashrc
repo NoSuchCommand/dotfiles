@@ -89,6 +89,21 @@ function eol_cleanup {
 #------------------------------------------------------------------------------#
 #-- Sources
 #------------------------------------------------------------------------------#
+
+# Source all .sh files in .bashrc.d
+# Directory and files MUST be owned by current user
+# and have 700 and 600 perms respectively
+bashrcd=~/.bashrc.d
+if [[ $(stat -c '%f' "$bashrcd") == 41c0 && -O "$bashrcd" ]]; then
+    shopt -s nullglob
+    for f in "$bashrcd"/*.sh; do
+        [[ $(stat -c '%f' "$f") == 8180 && -O "$f" ]] && {
+            source "$f"
+        }
+    done
+    shopt -u nullglob
+fi
+
 source /etc/profile.d/vte.sh # Workaround the CWD bug in GNOME Terminal
 source /usr/share/git-core/contrib/completion/git-prompt.sh
 
