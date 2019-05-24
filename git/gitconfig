@@ -17,6 +17,7 @@
 	prompt = false
 [diff]
 	tool = vimdiff
+	wordRegex = .
 [difftool]
 	prompt = false
 [status]
