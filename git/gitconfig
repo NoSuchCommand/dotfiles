@@ -21,3 +21,5 @@
 	prompt = false
 [status]
 	showUntrackedFiles = all
+[pull]
+	rebase = preserve
