@@ -20,7 +20,7 @@ alias gw='git what'
 # Include the python venv name in purple if it exists
 function venv_ps1() {
     if [ -n "$VIRTUAL_ENV" ]; then
-        printf "[\001\e[35m\002%s\001\e[0m\002]" "$(basename $VIRTUAL_ENV)"
+        printf '[\001\e[35m\002%s\001\e[0m\002]' "$(basename $VIRTUAL_ENV)"
     fi
 }
 
