@@ -9,7 +9,7 @@
 	what = !gitwhat
 	co   = checkout
 [push]
-	default = matching
+	default = current
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
