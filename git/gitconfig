@@ -8,6 +8,7 @@
 	ol   = log --oneline --no-decorate
 	what = !gitwhat
 	co   = checkout
+	st   = status
 [push]
 	default = current
 [merge]
