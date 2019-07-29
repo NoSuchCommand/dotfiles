@@ -11,6 +11,7 @@ fi
 alias eog=xviewer
 alias evince=xreader
 alias gw='git what'
+alias ls='LANG=C ls --color=auto'
 
 
 #------------------------------------------------------------------------------#
