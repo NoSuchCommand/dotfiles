@@ -2,6 +2,7 @@
 function brokenlinks() {
     local f t
     for f in *; do
+        [ -L "$f" ] || continue
         t=$(realpath "$f")
         [ -e "$t" ] || echo $f
     done
