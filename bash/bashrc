@@ -71,6 +71,8 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 PROMPT_COMMAND='__git_ps1 "[\$(bred_if_nz \$?)]\$(venv_ps1)" "[\u@\h \W]\\$ " "[%s]";'"$PROMPT_COMMAND"
 export PROMPT_COMMAND
 
+export PATH=$PATH:$HOME/.local/bin
+
 #------------------------------------------------------------------------------#
 #-- Options
 #------------------------------------------------------------------------------#
