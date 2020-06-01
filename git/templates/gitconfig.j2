@@ -1,14 +1,18 @@
-# ~/.gitconfig
 [color]
 	ui = true
+[user]
+	email = {{ myemail }}
+	name = {{ myname }}
 [alias]
-	lol  = log --oneline --all --graph --decorate
-	glog = log --oneline --all --graph --no-decorate
-	slog = log --oneline --all --decorate
-	ol   = log --oneline --no-decorate
+	lol = log --all --oneline --decorate --graph
+	slog = log --all --oneline --decorate
+	glog = log --all --oneline --no-decorate --graph
+	ol = log --oneline --no-decorate
 	what = !gitwhat
-	co   = checkout
-	st   = status
+	co = checkout
+	st = status
+	ci = commit
+	wdiff = diff --word-diff
 [push]
 	default = current
 [merge]

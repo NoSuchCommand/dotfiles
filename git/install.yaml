@@ -3,7 +3,18 @@
   connection: local
   gather_facts: no
   become: no
+  vars:
+    myname: ''
+    myemail: ''
   tasks:
+
+  - assert:
+      that:
+        - myname | length
+        - myemail | length
+      msg: >-
+        This playbook *requires* extra variables `myname` and `myemail`
+        (use --extra-vars)
 
   - name: User facts
     setup:
