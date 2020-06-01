@@ -1,0 +1,17 @@
+# ~/.gitignore
+
+a.out
+
+.vagrant/
+
+*.log
+*.swp
+*.tmp
+*.sav
+*.bak
+*.bkp
+*.ori
+*.orig
+
+*.rpmnew
+*.rpmsave
