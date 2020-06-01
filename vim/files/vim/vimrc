@@ -1,0 +1,15 @@
+set nocompatible
+
+call plug#begin('~/.vim/plugged')
+Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
+
+"Plug 'takac/vim-hardtime'
+"Plug 'godlygeek/tabular'
+"Plug 'vim-scripts/repeatable-motions.vim'
+"Plug 'wikitopian/hardmode'
+call plug#end()
+
+runtime! config/**/*.vim

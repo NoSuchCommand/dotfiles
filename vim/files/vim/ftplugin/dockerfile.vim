@@ -1,0 +1,2 @@
+" ft=dockerfile
+set colorcolumn=

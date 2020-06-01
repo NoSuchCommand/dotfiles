@@ -1,0 +1,2 @@
+" ft=puppet
+set colorcolumn=
