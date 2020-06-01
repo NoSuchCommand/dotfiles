@@ -1,2 +1,3 @@
 - import_playbook: bash/install.yaml
 - import_playbook: vim/install.yaml
+- import_playbook: git/install.yaml

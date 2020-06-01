@@ -1,0 +1,32 @@
+- name: Git configuration
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  tasks:
+
+  - name: User facts
+    setup:
+      filter: '*user*'
+
+  - name: User info
+    set_fact:
+      homedir: '{{ ansible_facts.user_dir }}'
+
+  - name: Main .gitconfig file
+    template:
+      src: gitconfig.j2
+      dest: '{{ homedir }}/.gitconfig'
+      mode: 0644
+
+  - name: Main .gitignore file
+    copy:
+      src: gitignore
+      dest: '{{ homedir }}/.gitignore'
+      mode: 0644
+
+  - name: Git custom subcommands
+    copy:
+      src: subcommands/
+      dest: '{{ homedir }}/.local/bin/'
+      mode: 0755
