@@ -3,9 +3,13 @@
   connection: local
   gather_facts: no
   become: no
-  vars:
-    myname: ''
-    myemail: ''
+  vars_prompt:
+  - name: myname
+    prompt: Name
+    private: no
+  - name: myemail
+    prompt: Email
+    private: no
   tasks:
 
   - assert:
