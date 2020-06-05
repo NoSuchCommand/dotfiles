@@ -4,20 +4,20 @@
   gather_facts: no
   become: no
   vars_prompt:
-  - name: myname
-    prompt: Name
+  - name: git_name
+    prompt: Name for git
     private: no
-  - name: myemail
-    prompt: Email
+  - name: git_email
+    prompt: Email for git
     private: no
   tasks:
 
   - assert:
       that:
-        - myname | length
-        - myemail | length
+        - git_name | length
+        - git_email | length
       msg: >-
-        This playbook *requires* extra variables `myname` and `myemail`
+        This playbook *requires* extra variables `git_name` and `git_email`
         (use --extra-vars)
 
   - name: User facts
