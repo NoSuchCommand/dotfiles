@@ -29,3 +29,5 @@ let g:xml_syntax_folding=1
 
 "autocmd VimEnter,FilterWritePre * if &diff | execute 'windo set wrap cc=' | endif
 "autocmd VimEnter,FilterWritePre * if &diff | color industry | endif
+
+set noshowmatch
