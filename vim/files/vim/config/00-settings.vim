@@ -31,3 +31,4 @@ let g:xml_syntax_folding=1
 "autocmd VimEnter,FilterWritePre * if &diff | color industry | endif
 
 set noshowmatch
+set smartcase
