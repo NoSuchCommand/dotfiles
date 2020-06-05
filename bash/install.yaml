@@ -19,15 +19,9 @@
       dest: '{{ homedir }}/.bashrc'
       mode: 0644
 
-  - name: Top level .bashrc.d directory
-    file:
-      path: '{{ homedir }}/.bashrc.d'
-      state: directory
-      mode: 0700
-
-  - name: Source files in .bashrc.d
+  - name: Main .bashrc.d directory
     copy:
-      src: '{{ item }}'
-      dest: '{{ homedir }}/.bashrc.d/'
+      src: bashrc.d/
+      dest: '{{ homedir }}/.bashrc.d'
+      directory_mode: 0700
       mode: 0600
-    with_fileglob: bashrc.d/*.sh
