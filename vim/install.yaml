@@ -36,4 +36,4 @@
       mode: 0644
 
   - name: Plugins are installed
-    command: vim +'PlugInstall --sync' +qa
+    command: vim +'PlugInstall --sync' +'PlugClean!' +qa
