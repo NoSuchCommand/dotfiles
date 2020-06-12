@@ -38,7 +38,7 @@ function eol_cleanup {
     local f
 
     git ls-files | while read f; do
-        file -b --mime-type "$f" | grep ^text/ && sed -ri 's/\s+$//' "$f"
+        file -b --mime-type "$f" | grep -q ^text/ && sed -ri 's/\s+$//' "$f"
     done
 }
 
