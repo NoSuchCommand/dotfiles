@@ -35,8 +35,3 @@ BEGIN_PS1='[$(bred_if_nz $?)]$(venv_ps1)'
 END_PS1='[\u@\h \W]\$ '
 PROMPT_COMMAND="__git_ps1 '$BEGIN_PS1' '$END_PS1' '[%s]'; $PROMPT_COMMAND"
 export PROMPT_COMMAND
-
-#------------------------------------------------------------------------------#
-#-- Options
-#------------------------------------------------------------------------------#
-#shopt -s direxpand
