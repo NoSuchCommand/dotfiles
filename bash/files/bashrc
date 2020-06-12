@@ -9,6 +9,8 @@ fi
 #-- Sources
 #------------------------------------------------------------------------------#
 
+source /etc/profile.d/vte.sh # Workaround the CWD bug in GNOME Terminal
+
 # Source all .sh files in .bashrc.d
 # Directory and files MUST be owned by current user
 # and have 700 and 600 perms respectively
@@ -22,16 +24,3 @@ if [[ $(stat -c '%f' "$bashrcd") == 41c0 && -O "$bashrcd" ]]; then
     done
     shopt -u nullglob
 fi
-
-source /etc/profile.d/vte.sh # Workaround the CWD bug in GNOME Terminal
-source /usr/share/git-core/contrib/completion/git-prompt.sh
-
-export GIT_PS1_SHOWCOLORHINTS=1
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-
-BEGIN_PS1='[$(bred_if_nz $?)]$(venv_ps1)'
-END_PS1='[\u@\h \W]\$ '
-PROMPT_COMMAND="__git_ps1 '$BEGIN_PS1' '$END_PS1' '[%s]'; $PROMPT_COMMAND"
-export PROMPT_COMMAND
