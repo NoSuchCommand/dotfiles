@@ -29,6 +29,7 @@ let g:xml_syntax_folding=1
 
 "autocmd VimEnter,FilterWritePre * if &diff | execute 'windo set wrap cc=' | endif
 "autocmd VimEnter,FilterWritePre * if &diff | color industry | endif
+autocmd BufNewFile,BufRead */Jenkinsfile set ft=groovy
 
 set noshowmatch
 set smartcase
