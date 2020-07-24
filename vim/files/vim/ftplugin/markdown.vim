@@ -1,6 +1,4 @@
 " ft=markdown
 set colorcolumn=
-set textwidth=79
+set textwidth=0
 set wrap
-
-set nonumber
