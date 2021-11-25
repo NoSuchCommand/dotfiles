@@ -1,0 +1,59 @@
+#!/bin/bash
+
+cmdname=${0##*/}
+onto=master
+push=0
+
+function print_usage {
+    echo "Usage: ${cmdname/-/ } [-o <onto>] [-p] <branch>..."
+    echo
+    echo "  -o <onto> : branch to rebase onto (defaults to 'master')"
+    echo "  -p        : force-push after rebasing"
+}
+
+while getopts :o:p c; do
+    case "$c" in
+        o)
+            onto="$OPTARG"
+        ;;
+        p)
+            push=1
+        ;;
+        '?')
+            echo "Unsupported option : -$OPTARG"
+            return 1
+        ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+(( $# < 1 )) && {
+    print_usage
+    exit 1
+}
+
+starting_branch=$(git symbolic-ref -q --short HEAD)
+
+if [[ -z "$starting_branch" ]]; then
+    echo "You must start from the HEAD of a named branch."
+    echo "Aborting..."
+fi
+
+for branch in "$@"; do
+    echo ==========================
+    echo     Processing $branch
+    echo ==========================
+    git checkout -q "$branch" || {
+        continue
+    }
+    git rebase "$onto" 2> /dev/null || {
+        echo "Error: rebasing $branch"
+        git rebase --abort
+        continue
+    }
+    if [[ $push == 1 ]]; then
+        git push --force
+    fi
+done
+
+git checkout -q "$starting_branch"
