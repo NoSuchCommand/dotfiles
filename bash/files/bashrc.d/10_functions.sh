@@ -75,3 +75,16 @@ function ghissue() {
                                    "${endline:+-L$endline}"
     return 0
 }
+
+# Activate a venv
+function vv() {
+    [[ -n "$1" ]] || {
+        echo "Error: no venv name given." >&2
+        return 1
+    }
+    [[ -n "$VENVS_BASE" ]] || {
+        echo "Error: please set VENVS_BASE." >&2
+        return 1
+    }
+    source $VENVS_BASE/$1/bin/activate
+}
