@@ -1,16 +1,10 @@
 #!/bin/bash
 
-[ -n "$1" ] || {
-    echo 'Error : missing commit hash as an argument.'
-    echo
-    echo 'Usage: gitwhat <COMMIT> [<FILE>...]'
-    echo
-    echo 'Shows differences between the specified commit and its main parent'
-    echo 'for the specified files (or all if none given)'
-    exit 1
-}
+if [ -z "$1" ]; then
+    ref=HEAD
+else
+    ref="$1"
+    shift
+fi
 
-ref="$1"
-shift
-
-git diff "$ref"^ "$ref" "$@"
+git diff "$@" "$ref"^ "$ref"
