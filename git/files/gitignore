@@ -15,3 +15,10 @@ a.out
 
 *.rpmnew
 *.rpmsave
+
+fm_*
+**/__pycache__/*
+
+/.terraform
+
+/PERSONAL_NOTES.md
