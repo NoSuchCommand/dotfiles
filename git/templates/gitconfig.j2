@@ -22,10 +22,28 @@
 	slog = log --branches --remotes --tags --oneline --decorate
 	glog = log --branches --remotes --tags --oneline --no-decorate --graph
 	ol = log --oneline --no-decorate
+	old = log --oneline --decorate
 	co = checkout
 	st = status
 	ci = commit
 	wdiff = diff --word-diff
+	sl = stash list
+	sp = stash pop
+	spsh = stash push
+	ri = rebase -i
+	rc = rebase --continue
+	ra = rebase --abort
+	amd = commit --amend --no-edit
+	eamd = commit --amend --edit
+	ds = diff --staged
+	wds = wdiff --staged
+	pf = push -f
+	cmsg = show -s --oneline
+	root = !pwd
+	br = branch
+	cp = cherry-pick
+	stis = status --ignore-submodules
+	cob = checkout -b
 [push]
 	default = current
 [merge]
