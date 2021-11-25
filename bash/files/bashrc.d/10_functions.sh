@@ -88,3 +88,13 @@ function vv() {
     }
     source $VENVS_BASE/$1/bin/activate
 }
+
+# Remove line from SSH known_hosts
+# rkh = remove know hosts
+function rkh() {
+    [[ "$1" =~ ^[0-9]+$ ]] || {
+        echo "Please provide a line numer"
+        return 1
+    }
+    sed -i "$1 d" ~/.ssh/known_hosts
+}
