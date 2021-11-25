@@ -98,3 +98,21 @@ function rkh() {
     }
     sed -i "$1 d" ~/.ssh/known_hosts
 }
+
+function _set_title() {
+    if [[ -n "$TERM_TITLE" ]]; then
+        echo -ne "\033]0;$TERM_TITLE\007"
+    fi
+}
+
+function title() {
+    (( $# >= 1 )) || {
+        echo "Error: missing argument title"
+        return 1
+    }
+    if [[ -z "$*" ]]; then
+        unset TERM_TITLE
+    else
+        export TERM_TITLE="$*"
+    fi
+}
