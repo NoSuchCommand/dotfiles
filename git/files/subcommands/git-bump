@@ -1,13 +1,16 @@
 #!/bin/bash
 
 cmdname=${0##*/}
-onto=master
+onto=$(
+    git for-each-ref --format='%(refname:short)' refs/heads/ma{ster,in} |
+    head -1
+)
 push=0
 
 function print_usage {
     echo "Usage: ${cmdname/-/ } [-o <onto>] [-p] <branch>..."
     echo
-    echo "  -o <onto> : branch to rebase onto (defaults to 'master')"
+    echo "  -o <onto> : branch to rebase onto (defaults to '$onto')"
     echo "  -p        : force-push after rebasing"
 }
 
