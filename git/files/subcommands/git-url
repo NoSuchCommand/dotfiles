@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# From within a local git clone, takes a file as an argument
+# and prints the web link to that file on the GitHub/GitLab WebUI
+cmdname=${0##*/}
+
+function print_usage {
+    echo "Usage: ${cmdname/-/ } <filepath>..."
+}
+
+(( $# < 1 )) && {
+    print_usage
+    exit 1
+}
+
+gitroot=$(git rev-parse --show-toplevel)
+gitbranch=$(git branch --show-current)
+repo=$(git remote -v |
+             awk '/^origin.*\(fetch\)/ {
+                      sub("\\.git$", "", $2);
+                      if ($2 ~ /^git@/) {
+                          sub(":", "/", $2);
+                          sub("git@", "https://", $2);
+                      } else {
+                          sub("[^/]*@", "", $2);
+                      }
+                      print $2;
+                  }'
+            )
+
+for pathspec in "$@"; do
+    file=$(realpath "$pathspec")
+    gitfile=${file#${gitroot}/}
+    printf "%s/blob/%s/%s\n" "$repo" "$gitbranch" "$gitfile"
+done
