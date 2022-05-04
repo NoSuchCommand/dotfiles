@@ -5,17 +5,22 @@
 cmdname=${0##*/}
 gitroot=$(git rev-parse --show-toplevel)
 gitbranch=$(git branch --show-current)
+permalink=0
 
 function print_usage {
-    echo "Usage: ${cmdname/-/ } [-b <branch>] <filepath>..."
+    echo "Usage: ${cmdname/-/ } [-b <branch>] [-p] <filepath>..."
     echo
     echo "  -b <branch> : get URL for this branch instead of the current one"
+    echo "  -p          : get a permalink"
 }
 
-while getopts :b: c; do
+while getopts :b:p c; do
     case "$c" in
         b)
             gitbranch="$OPTARG"
+        ;;
+        p)
+            permalink=1
         ;;
         '?')
             echo "Unsupported option : -$OPTARG"
@@ -29,6 +34,10 @@ shift $((OPTIND - 1))
     print_usage
     exit 1
 }
+
+if [[ $permalink == 1 ]]; then
+    gitbranch=$(git rev-parse $gitbranch)
+fi
 
 repo=$(git remote -v |
              awk '/^origin.*\(fetch\)/ {
