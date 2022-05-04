@@ -3,18 +3,33 @@
 # From within a local git clone, takes a file as an argument
 # and prints the web link to that file on the GitHub/GitLab WebUI
 cmdname=${0##*/}
+gitroot=$(git rev-parse --show-toplevel)
+gitbranch=$(git branch --show-current)
 
 function print_usage {
-    echo "Usage: ${cmdname/-/ } <filepath>..."
+    echo "Usage: ${cmdname/-/ } [-b <branch>] <filepath>..."
+    echo
+    echo "  -b <branch> : get URL for this branch instead of the current one"
 }
+
+while getopts :b: c; do
+    case "$c" in
+        b)
+            gitbranch="$OPTARG"
+        ;;
+        '?')
+            echo "Unsupported option : -$OPTARG"
+            exit 1
+        ;;
+    esac
+done
+shift $((OPTIND - 1))
 
 (( $# < 1 )) && {
     print_usage
     exit 1
 }
 
-gitroot=$(git rev-parse --show-toplevel)
-gitbranch=$(git branch --show-current)
 repo=$(git remote -v |
              awk '/^origin.*\(fetch\)/ {
                       sub("\\.git$", "", $2);
