@@ -38,9 +38,13 @@ nnoremap <F5> :set cursorcolumn!<CR>
 " Open file under cursor
 nnoremap <Leader>gf :e %:p:h:t/<cfile><CR>
 
-" Center cursor when navigating search results
+" Center cursor
+" when navigating search results
 nnoremap n nzzzv
 nnoremap N Nzzzv
+" when moving half-pages
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
 
 " Do not move cursor when merging lines
 nnoremap J mzJ`z
