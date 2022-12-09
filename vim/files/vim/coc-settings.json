@@ -1,0 +1,12 @@
+{
+  "pyright.enable": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.pylamaEnabled": true,
+  "python.linting.pylamaArgs": [
+      "-i",
+      "C901"
+  ],
+  "pyright.inlayHints.enable": false,
+  "yaml.validate": false,
+  "rust-client.disableRustup": true
+}
