@@ -12,3 +12,4 @@ export VENVS_BASE=~/Dev/venvs
 export REQUESTS_CA_BUNDLE=/etc/pki/tls/cert.pem
 export PROMPT_COMMAND="$PROMPT_COMMAND; _set_title"
 export QUOTING_STYLE=literal
+export GIT_REPOS_PATH=~/Dev
