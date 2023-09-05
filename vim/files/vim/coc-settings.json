@@ -6,7 +6,7 @@
       "-i",
       "C901"
   ],
-  "pyright.inlayHints.enable": false,
+  "inlayHint.enable": false,
   "yaml.validate": false,
   "rust-client.disableRustup": true
 }
