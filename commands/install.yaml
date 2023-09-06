@@ -1,0 +1,28 @@
+- name: Custom commands
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  tasks:
+
+  - name: User facts
+    setup:
+      filter: '*user*'
+
+  - name: User info
+    set_fact:
+      homedir: '{{ ansible_facts.user_dir }}'
+
+  - name: Local bin directory
+    file:
+      path: '{{ homedir }}/.local/bin'
+      state: directory
+      mode: 0755
+
+  - name: Install local commands
+    copy:
+      src: bin/
+      dest: '{{ homedir }}/.local/bin'
+
+  - name: Update repos list
+    command: '{{ homedir }}/.local/bin/updaterepos'

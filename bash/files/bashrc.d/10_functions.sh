@@ -101,28 +101,32 @@ function rkh() {
 
 # Fuzzy-search-goto git repositories
 function repo() {
-    [[ -n "$GIT_REPOS_PATH" &&
+    [[ -n "${GIT_REPOS_PATH//[[:space:]]/}" &&
        -d "$GIT_REPOS_PATH" &&
        -r "$GIT_REPOS_PATH" &&
        -x "$GIT_REPOS_PATH" ]] || {
-        echo 'Variable GIT_REPOS_PATH must point to a valid directory'
+        echo 'Fatal: Variable GIT_REPOS_PATH does not point to a valid directory'
         return 1
     }
 
-    local query=""
+    [[ -n "${GIT_REPOS_CACHE//[[:space:]]/}" ]] || {
+        echo 'Fatal: Variable GIT_REPOS_CACHE is not defined'
+        exit 2
+    }
+
+    local query="" target dest
     if (( $# > 0 )); then
         query="--query=$1"
     fi
 
-    target=$(
-        cd "$GIT_REPOS_PATH"
-        find -type d -name .git -print0       |
-            sed -zr 's#^\./##g; s#/\.git$##g' |
-            fzf $query --read0
-    )
+    target=$(fzf $query --read0 < "$GIT_REPOS_CACHE")
 
     if [[ -n "$target" ]]; then
-        cd "$GIT_REPOS_PATH"/"$target"
+        dest="$GIT_REPOS_PATH"/"$target"
+        cd "$dest" || {
+            echo "Fatal: Could not change directory to ${dest}"
+            return 10
+        }
     fi
 }
 
