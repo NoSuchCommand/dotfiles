@@ -1,0 +1,38 @@
+- name: Services configuration
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  tasks:
+
+  - name: User facts
+    setup:
+      filter: '*user*'
+
+  - name: User info
+    set_fact:
+      homedir: '{{ ansible_facts.user_dir }}'
+      systemd_user_dir: '{{ homedir }}/.config/systemd/user'
+
+  - name: Systemd user directory
+    file:
+      path: "{{ systemd_user_dir }}"
+      state: directory
+      mode: 0755
+
+  - name: Updaterepos units are installed
+    copy:
+      src: updaterepos.{{ item }}
+      dest: '{{ systemd_user_dir }}'
+      mode: 0644
+    loop:
+    - service
+    - timer
+
+  - name: Updaterepos timer is active
+    systemd:
+      unit: updaterepos.timer
+      state: started
+      enabled: yes
+      scope: user
+      daemon_reload: yes
