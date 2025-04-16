@@ -1,11 +1,20 @@
 #!/bin/bash
 
 cmdname=${0##*/}
-onto=$(
-    git for-each-ref --format='%(refname:short)' refs/heads/ma{ster,in} |
-    head -1
-)
 push=0
+
+declare -a preferred_branches=(
+    develop
+    master
+    main
+)
+for pbranch in "${preferred_branches[@]}"; do
+    onto=$(
+        git for-each-ref --format='%(refname:short)' "refs/heads/$pbranch" |
+        head -1
+    )
+    [[ -n $onto ]] && break
+done
 
 function print_usage {
     echo "Usage: ${cmdname/-/ } [-o <onto>] [-p] <branch>..."
