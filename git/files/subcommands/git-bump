@@ -46,6 +46,11 @@ shift $((OPTIND - 1))
 
 starting_branch=$(git symbolic-ref -q --short HEAD)
 
+if git checkout -q - &>/dev/null; then
+    previous_branch=$(git symbolic-ref -q --short HEAD)
+    git checkout -q -
+fi
+
 if [[ -z "$starting_branch" ]]; then
     echo "You must start from the HEAD of a named branch."
     echo "Aborting..."
@@ -68,4 +73,7 @@ for branch in "$@"; do
     fi
 done
 
+if [[ -n "$previous_branch" ]]; then
+    git checkout -q "$previous_branch"
+fi
 git checkout -q "$starting_branch"
